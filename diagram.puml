@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface GraphInterface
+{
+
+}
+
+class DiGraph
+{
+
+}
+
+class TestDiGraph
+{
+
+}
+
+interface GraphAlgoInterface
+{
+
+}
+
+class GraphAlgo
+{
+
+}
+
+class TestGraphAlgo
+{
+
+}
+
+class main
+{
+
+}
+
+GraphAlgoInterface ..|> GraphAlgo
+GraphInterface ..|> DiGraph
+TestDiGraph ..> DiGraph
+DiGraph --|> GraphAlgo
+TestGraphAlgo ..> GraphAlgo
+GraphAlgo --|> main
+
+@enduml
+@enduml
