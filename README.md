@@ -61,5 +61,5 @@ This project was done by using ...
 <a href="https://www.python.org/" target="Python"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/2048px-Python.svg.png" alt="Python" width="40" height="40"/></a>
 <a href="https://www.jetbrains.com/pycharm/" title="Pycharm"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/PyCharm_Icon.svg/1024px-PyCharm_Icon.svg.png" alt="Pycharm" width="40" height="40"/></a>  
 <a href="https://www.json.org/json-en.html" title="JSON"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JSON_vector_logo.svg/2048px-JSON_vector_logo.svg.png" alt="JSON" width="40" height="40"/></a>
-<a href="https://www.pygame.org/news" title="PyGame"> <img src="https://www.clipartmax.com/png/middle/245-2450711_ski-slalom-pygame-icon.png" alt="PyGame" width="40" height="40"/></a>  
+<a href="https://www.pygame.org/news" title="PyGame"> <img src="https://www.pygame.org/ftp/pygame-head-party.png" alt="PyGame" width="40" height="40"/></a>  
 
