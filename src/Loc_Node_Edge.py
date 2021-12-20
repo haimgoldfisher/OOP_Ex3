@@ -3,10 +3,11 @@ import math
 
 
 class Location(object):
-    def __init__(self, x: int, y: int, z: int) -> None:
+    def __init__(self, x: int, y: int, z: int, pos: tuple) -> None:
         self.x = x
         self.y = y
         self.z = z
+        self.pos = (self.x, self.y, self.z)
 
     def distance(self, ot_location) -> float:
         x_squared = (self.x - ot_location.x) * (self.x - ot_location.x)
@@ -17,7 +18,7 @@ class Location(object):
 
 
 class Node(object):
-    def __int__(self, key: int, pos: Location, parents_keys: dict, children_keys: dict,
+    def __int__(self, key: int, pos: tuple, parents_keys: dict, children_keys: dict,
                 edges_to_children: dict) -> None:
         self.key = key
         self.pos = pos

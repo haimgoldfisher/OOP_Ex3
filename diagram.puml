@@ -1,6 +1,11 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+class Loc_Node_Edge
+{
+
+}
+
 interface GraphInterface
 {
 
@@ -31,17 +36,26 @@ class TestGraphAlgo
 
 }
 
+class GUI
+{
+
+}
+
 class main
 {
 
 }
 
+Loc_Node_Edge --|> DiGraph
 GraphAlgoInterface ..|> GraphAlgo
 GraphInterface ..|> DiGraph
 TestDiGraph ..> DiGraph
 DiGraph --|> GraphAlgo
 TestGraphAlgo ..> GraphAlgo
 GraphAlgo --|> main
+DiGraph --|> GUI
+GraphAlgo --|> GUI
+GUI --|> main
 
 @enduml
 @enduml
