@@ -18,10 +18,12 @@ class GraphAlgo(GraphAlgoInterface):
     def load_from_json(self, file_name: str) -> bool:
         try:
             with open(file_name, 'r') as json_file:
-                self.graph = json.load(
+                self.graph.graph = json.load(
                     json_file, object_hook=lambda json_dict: SimpleNamespace(**json_dict))
+                return True
         except FileExistsError as err:
             print(err)
+            return False
 
 #    root_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,7 +32,12 @@ class GraphAlgo(GraphAlgoInterface):
  #       list_of_stud = [Student(**s) for s in list_of_stud_dict]
 
     def save_to_json(self, file_name: str) -> bool:
-        pass
+        try:
+            json_obj = json.dumps(self.graph)
+            return True
+        except IOError as err:
+            print(err)
+            return False
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         pass

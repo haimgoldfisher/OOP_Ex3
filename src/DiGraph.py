@@ -6,6 +6,7 @@ class DiGraph(GraphInterface):
     def __init__(self, key_nodes: dict, key_edges: dict, mc: int) -> None:
         self.key_nodes = key_nodes
         self.key_edges = key_edges
+        self.graph = {"Nodes": self.key_nodes, "Edges": key_edges}
         self.mc = mc
 
     def v_size(self) -> int:
@@ -45,17 +46,17 @@ class DiGraph(GraphInterface):
         keys.update(self.key_nodes.keys())
         for key in keys:
             key_visited.update(key, False)
-        stack = [start]
-        key_visited.update(start, True)
-        counter = counter + 1
-        while len(stack) is not 0:
-            curr_id = stack.pop()
-            curr_node = self.key_nodes.get(curr_id)
-            for child_key in curr_node.children_keys:
-                if key_visited.get(child_key) is not None and key_visited.get(child_key) is False:
-                    stack.append(child_key)
-                    key_visited.update(child_key, True)
-                    counter = counter + 1
+            stack = [start]
+            key_visited.update(start, True)
+            counter = counter + 1
+            while len(stack) is not 0:
+                curr_id = stack.pop()
+                curr_node = self.key_nodes.get(curr_id)
+                for child_key in curr_node.children_keys:
+                    if key_visited.get(child_key) is not None and key_visited.get(child_key) is False:
+                        stack.append(child_key)
+                        key_visited.update(child_key, True)
+                        counter = counter + 1
         return counter
 
 
