@@ -1,4 +1,6 @@
 import copy
+import math
+import queue
 from queue import PriorityQueue
 from types import SimpleNamespace
 from typing import List
@@ -27,11 +29,11 @@ class GraphAlgo(GraphAlgoInterface):
             print(err)
             return False
 
-#    root_path = os.path.dirname(os.path.abspath(__file__))
+    #    root_path = os.path.dirname(os.path.abspath(__file__))
 
-#    with open(root_path + '/students.json', 'r') as file:
- #       list_of_stud_dict = json.load(file)['students']
- #       list_of_stud = [Student(**s) for s in list_of_stud_dict]
+    #    with open(root_path + '/students.json', 'r') as file:
+    #       list_of_stud_dict = json.load(file)['students']
+    #       list_of_stud = [Student(**s) for s in list_of_stud_dict]
 
     def save_to_json(self, file_name: str) -> bool:
         try:
@@ -41,10 +43,10 @@ class GraphAlgo(GraphAlgoInterface):
             print(err)
             return False
 
-    def reverse (graph) -> DiGraph:
+    def reverse(graph) -> DiGraph:
         ans = copy.deepcopy(graph)
         keys_list = list
-        for key in  ans.get_graph().key_edges.keys():
+        for key in ans.get_graph().key_edges.keys():
             keys_list.append(key)
         for i in enumerate(keys_list):
             key = keys_list[i]
@@ -54,8 +56,7 @@ class GraphAlgo(GraphAlgoInterface):
             ans.connect(key[1], key[0], edge.weight)
         return ans
 
-
-    def isConnected(self) -> bool :
+    def isConnected(self) -> bool:
         keys = list(self.graph.key_nodes.keys())
         key = keys[0]
         visited = self.graph.my_dfs(key)
@@ -111,8 +112,7 @@ class GraphAlgo(GraphAlgoInterface):
             curr = previous.get(curr)
         src_node = self.graph.key_nodes.get(id1)
         path.append(src_node)
-        return path, #distance
-
+        return path,  # distance
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
         pass
@@ -120,7 +120,53 @@ class GraphAlgo(GraphAlgoInterface):
     def centerPoint(self) -> (int, float):
         if self.isConnected is False:
             return None
+        e = dict()
+        lst = []
+        for src in self.graph.key_nodes.keys():
+            curr_maximum_src = self.dijkstra(src)
+            lst.append(curr_maximum_src)
+        max_min = min(lst)
+        max_min_dist = max_min[0]
+        key = max_min[1]
+        nd = self.graph.key_nodes.get(key)
+        return key, max_min_dist
 
+
+    def dijkstra(self, src):
+        distances = dict()
+        visited = dict()
+        keys = self.graph.key_nodes.copy()
+        pq = queue.PriorityQueue()
+        for key in keys.keys():
+            distances[key] = math.inf
+        distances[src] = 0
+        pq.add((0, src))
+        while visited.__len__() != keys.__len__():
+            if pq.not_empty():
+                break
+            curr_key = pq.get()
+            if visited.get(curr_key) is not None:
+                continue
+            visited[curr_key] = True
+            curr_nd = keys.get(curr_key)
+            for edge in curr_nd.child_weight.items():
+                curr_dest = edge[1]
+                weight = edge[0]
+                if visited.get(curr_dest) is not None:
+                    continue
+                curr_weight = distances.get(curr_dest)
+                new_weight = distances.get(curr_key) + weight
+                if new_weight < curr_weight:
+                    distances[curr_dest] = new_weight
+                pq.add((distances.get(curr_dest), curr_dest))
+        maximum = -math.inf
+        max_id = -1
+        for key in keys.keys():
+            if distances.get(key) > maximum and distances.get(key) != math.inf:
+                maximum = distances.get(key)
+                max_id = key
+        ans = (maximum, src)
+        return ans
 
     def plot_graph(self) -> None:
         pass

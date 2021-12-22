@@ -1,3 +1,5 @@
+import queue
+
 from GraphInterface import GraphInterface
 from Loc_Node_Edge import Location, Node
 
@@ -104,20 +106,31 @@ class DiGraph(GraphInterface):
 
 
 if __name__ == '__main__':
-    g = DiGraph()  # creates an empty directed graph
-    for n in range(4):
-        g.add_node(n)
-    g.add_edge(0, 1, 1)
-    g.add_edge(1, 0, 1.1)
-    g.add_edge(1, 2, 1.3)
-    g.add_edge(2, 3, 1.1)
-    g.add_edge(1, 3, 1.9)
-    g.remove_edge(1, 3)
-    g.add_edge(1, 3, 10)
-    print(g)  # prints the __repr__ (func output)
-    print(g.get_all_v())  # prints a dict with all the graph's vertices.
-    print(g.all_in_edges_of_node(1))
-    print(g.all_out_edges_of_node(1))
-    # g_algo = GraphAlgo(g)
-    # print(g_algo.shortest_path(0, 3))
-    # g_algo.plot_graph()
+    # g = DiGraph()  # creates an empty directed graph
+    # for n in range(4):
+    #     g.add_node(n)
+    # g.add_edge(0, 1, 1)
+    # g.add_edge(1, 0, 1.1)
+    # g.add_edge(1, 2, 1.3)
+    # g.add_edge(2, 3, 1.1)
+    # g.add_edge(1, 3, 1.9)
+    # g.remove_edge(1, 3)
+    # g.add_edge(1, 3, 10)
+    # print(g)  # prints the __repr__ (func output)
+    # print(g.get_all_v())  # prints a dict with all the graph's vertices.
+    # print(g.all_in_edges_of_node(1))
+    # print(g.all_out_edges_of_node(1))
+    # # g_algo = GraphAlgo(g)
+    # # print(g_algo.shortest_path(0, 3))
+    # # g_algo.plot_graph()
+    #
+    # x = {1:"a" , 2:"b"}
+    # for i in x.items():
+    #     print(i[1])
+    pq = queue.PriorityQueue()
+    pq.put((2.5, 0))
+    pq.put((1.5, 1))
+    pq.put((4.5, 2))
+    pq.put((0.5, 3))
+    while(pq.not_empty):
+        print(pq.get())
