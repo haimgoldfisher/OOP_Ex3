@@ -1,3 +1,5 @@
+import copy
+from queue import PriorityQueue
 from types import SimpleNamespace
 from typing import List
 import json
@@ -39,14 +41,86 @@ class GraphAlgo(GraphAlgoInterface):
             print(err)
             return False
 
+    def reverse (graph) -> DiGraph:
+        ans = copy.deepcopy(graph)
+        keys_list = list
+        for key in  ans.get_graph().key_edges.keys():
+            keys_list.append(key)
+        for i in enumerate(keys_list):
+            key = keys_list[i]
+            removed_edge = ans.remove_edge(key[0], key[1])
+        for key in graph.key_edges.keys():
+            edge = graph.key_edges.get(key[0], key[1])
+            ans.connect(key[1], key[0], edge.weight)
+        return ans
+
+
+    def isConnected(self) -> bool :
+        keys = list(self.graph.key_nodes.keys())
+        key = keys[0]
+        visited = self.graph.my_dfs(key)
+        if visited != self.graph.v_size():
+            return False
+        g_copy = copy.deepcopy(self.graph)
+        reversed_g = reverse(g_copy)
+        visited = reversed_g.myDFS(key)
+        if visited != self.graph.v_size():
+            return False
+        return True
+
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        pass
+        path = list
+        if id1 == id2:
+            path.append(self.graph.key_nodes.get(id1))
+            return 0, path
+        previous, distances, visited, keys = dict, dict, dict, dict
+        keys.update(self.graph.key_nodes.keys())
+        pq = PriorityQueue
+        for key in keys:
+            distances.update(key, float('inf'))
+        distances.update(id1, 0)
+        pq.put(id1, 0)
+        while len(visited) != len(keys):
+            if pq.empty():
+                break
+            curr_key = pq.pop.get()
+            if curr_key is id2:
+                break
+            if curr_key in visited:
+                continue
+            visited.update(curr_key)
+            curr_node = self.graph.key_nodes.get(curr_key)
+            for edge in curr_node.edges_to_children:
+                curr_edge = edge
+                curr_dest = curr_edge.dest
+                if curr_dest in visited:
+                    continue
+                curr_weight = distances.get(curr_dest)
+                new_weight = distances.get(curr_key) + curr_edge.weight
+                if new_weight < curr_weight:
+                    distances.update(curr_dest, new_weight)
+                    previous.update(curr_dest, curr_key)
+                pq.put(curr_dest, distances.get(curr_dest))
+
+        if distances.get(id2) == float('inf'):
+            return None
+        curr = id2
+        while curr != id1:
+            curr_node = self.graph.key_nodes.get(curr)
+            path.append(curr_node)
+            curr = previous.get(curr)
+        src_node = self.graph.key_nodes.get(id1)
+        path.append(src_node)
+        return path, #distance
+
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
         pass
 
     def centerPoint(self) -> (int, float):
-        pass
+        if self.isConnected is False:
+            return None
+
 
     def plot_graph(self) -> None:
         pass
