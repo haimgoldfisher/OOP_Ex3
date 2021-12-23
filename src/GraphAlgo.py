@@ -87,55 +87,52 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        path = list
+        path = []
         if id1 == id2:
-            path.append(self.graph.key_nodes.get(id1))
+            path.append(id1)
             return 0, path
-        previous, distances, visited, keys = dict, dict, dict, dict
-        keys.update(self.graph.key_nodes.keys())
-        pq = PriorityQueue
-        for key in keys:
-            distances.update(key, float('inf'))
-        distances.update(id1, 0)
-        pq.put(id1, 0)
-        while len(visited) != len(keys):
-            if pq.empty():
+        previous = dict()
+        distances = dict()
+        visited = dict()
+        keys = self.graph.key_nodes.copy()
+        pq = queue.PriorityQueue()
+        for key in keys.keys():
+            distances[key] = math.inf
+        distances[id1] = 0
+        pq.put((0, id1))
+        while visited.__len__() != keys.__len__():
+            if pq.qsize() == 0:
                 break
-            curr_key = pq.pop.get()
-            if curr_key is id2:
-                break
-            if curr_key in visited:
+            curr_key = pq.get()[1]
+            if visited.get(curr_key) is not None:
                 continue
-            visited.update(curr_key)
-            curr_node = self.graph.key_nodes.get(curr_key)
-            for edge in curr_node.edges_to_children:
-                curr_edge = edge
-                curr_dest = curr_edge.dest
-                if curr_dest in visited:
+            visited[curr_key] = True
+            curr_nd = keys.get(curr_key)
+            for edge in curr_nd.child_weight.items():
+                curr_dest = edge[0]
+                weight = edge[1]
+                if visited.get(curr_dest) is not None:
                     continue
                 curr_weight = distances.get(curr_dest)
-                new_weight = distances.get(curr_key) + curr_edge.weight
+                new_weight = distances.get(curr_key) + weight
                 if new_weight < curr_weight:
-                    distances.update(curr_dest, new_weight)
-                    previous.update(curr_dest, curr_key)
-                pq.put(curr_dest, distances.get(curr_dest))
-
-        if distances.get(id2) == float('inf'):
-            return None
+                    distances[curr_dest] = new_weight
+                    previous[curr_dest] = curr_key
+                pq.put((distances.get(curr_dest), curr_dest))
+        if distances.get(id2) == math.inf:
+            return -1, None
         curr = id2
         while curr != id1:
-            curr_node = self.graph.key_nodes.get(curr)
-            path.append(curr_node)
+            path.insert(0, curr)
             curr = previous.get(curr)
-        src_node = self.graph.key_nodes.get(id1)
-        path.append(src_node)
-        return path,  # distance
+        dist = distances.get(id2)
+        return dist, path  # distance
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
         pass
 
     def centerPoint(self) -> (int, float):
-        if self.isConnected is False:
+        if not self.isConnected():
             return None
         e = dict()
         lst = []
@@ -158,7 +155,7 @@ class GraphAlgo(GraphAlgoInterface):
         distances[src] = 0
         pq.put((0, src))
         while visited.__len__() != keys.__len__():
-            if not pq.not_empty:
+            if pq.qsize() == 0:
                 break
             curr_key = pq.get()[1]
             if visited.get(curr_key) is not None:
@@ -190,7 +187,7 @@ class GraphAlgo(GraphAlgoInterface):
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    g.load_from_json("../data/A5.json")
+    g.load_from_json("../data/T0.json")
     print(g.graph)
     print(g.isConnected())
     print(g.centerPoint())
