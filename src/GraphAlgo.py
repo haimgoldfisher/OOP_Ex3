@@ -1,4 +1,5 @@
 import copy
+import itertools
 import math
 import queue
 from queue import PriorityQueue
@@ -13,8 +14,11 @@ from Loc_Node_Edge import Node, Location
 
 
 class GraphAlgo(GraphAlgoInterface):
-    def __init__(self) -> None:
-        self.graph = DiGraph()
+    def __init__(self, *args) -> None:
+        if len(args) == 1:
+            self.graph = args[0]
+        else:
+            self.graph = DiGraph()
 
     def get_graph(self) -> GraphInterface:
         return self.graph
@@ -120,16 +124,45 @@ class GraphAlgo(GraphAlgoInterface):
                     previous[curr_dest] = curr_key
                 pq.put((distances.get(curr_dest), curr_dest))
         if distances.get(id2) == math.inf:
-            return -1, None
+            return math.inf, []
         curr = id2
         while curr != id1:
             path.insert(0, curr)
             curr = previous.get(curr)
+        path.insert(0, id1)
         dist = distances.get(id2)
         return dist, path  # distance
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
-        pass
+        id_distances = {}
+        id_previous = {}
+        for node_id in node_lst:
+            ans, curr_distances, curr_previous = self.dijkstra(node_id)
+            id_distances[node_id] = curr_distances
+            id_previous[node_id] = curr_previous
+        min_path_dist = math.inf
+        min_path = []
+        all_perms = itertools.permutations(node_lst)
+        for perm in all_perms:
+            curr_path_weight = 0
+            for i in range(len(perm) - 1):
+                curr_path_weight += id_distances.get(perm[i]).get(perm[i + 1])
+            if curr_path_weight < min_path_dist:
+                min_path_dist = curr_path_weight
+                min_path = perm
+        full_min_path = []
+        for i in range(len(min_path) - 1):
+            id1 = min_path[i]
+            id2 = min_path[i + 1]
+            curr_previous = id_previous.get(id1)
+            curr = id2
+            ppath = []
+            while curr != id1:
+                ppath.insert(0, curr)
+                curr = curr_previous.get(curr)
+            full_min_path += ppath
+        full_min_path.insert(0, min_path[0])
+        return full_min_path, min_path_dist
 
     def centerPoint(self) -> (int, float):
         if not self.isConnected():
@@ -137,17 +170,18 @@ class GraphAlgo(GraphAlgoInterface):
         e = dict()
         lst = []
         for src in self.graph.key_nodes.keys():
-            curr_maximum_src = self.dijkstra(src)
+            curr_maximum_src, distances, previous = self.dijkstra(src)
             lst.append(curr_maximum_src)
         max_min = min(lst)
         max_min_dist = max_min[0]
         key = max_min[1]
-        nd = self.graph.key_nodes.get(key)
+        # nd = self.graph.key_nodes.get(key)
         return key, max_min_dist
 
     def dijkstra(self, src):
         distances = dict()
         visited = dict()
+        previous = dict()
         keys = self.graph.key_nodes.copy()
         pq = queue.PriorityQueue()
         for key in keys.keys():
@@ -171,6 +205,7 @@ class GraphAlgo(GraphAlgoInterface):
                 new_weight = distances.get(curr_key) + weight
                 if new_weight < curr_weight:
                     distances[curr_dest] = new_weight
+                    previous[curr_dest] = curr_key
                 pq.put((distances.get(curr_dest), curr_dest))
         maximum = -math.inf
         max_id = -1
@@ -179,7 +214,7 @@ class GraphAlgo(GraphAlgoInterface):
                 maximum = distances.get(key)
                 max_id = key
         ans = (maximum, src)
-        return ans
+        return ans, distances, previous
 
     def plot_graph(self) -> None:
         pass
@@ -187,7 +222,10 @@ class GraphAlgo(GraphAlgoInterface):
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    g.load_from_json("../data/T0.json")
+    g.load_from_json("../data/A5.json")
     print(g.graph)
     print(g.isConnected())
     print(g.centerPoint())
+    print(g.shortest_path(0,42))
+    print(g.TSP([0, 5,4,9]))
+    print("H")
