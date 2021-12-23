@@ -9,12 +9,12 @@ import os
 import GraphInterface
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
-from Loc_Node_Edge import Node, Edge
+from Loc_Node_Edge import Node, Location
 
 
 class GraphAlgo(GraphAlgoInterface):
-    def __init__(self, graph: DiGraph) -> None:
-        self.graph = graph
+    def __init__(self) -> None:
+        self.graph = DiGraph()
 
     def get_graph(self) -> GraphInterface:
         return self.graph
@@ -22,8 +22,24 @@ class GraphAlgo(GraphAlgoInterface):
     def load_from_json(self, file_name: str) -> bool:
         try:
             with open(file_name, 'r') as json_file:
-                self.graph.graph = json.load(
-                    json_file, object_hook=lambda json_dict: SimpleNamespace(**json_dict))
+                jobj = json.load(json_file)
+                edges = jobj.get("Edges")
+                nodes = jobj.get("Nodes")
+                for d in nodes:
+                    node_id = d.get("id")
+                    pos = d.get("pos")
+                    if pos is not None:
+                        pos = pos.split(",")
+                        new_loc = Location(pos[0], pos[1], pos[2])
+                        self.graph.add_node(node_id, new_loc.pos)
+                    else:
+                        self.graph.add_node(node_id, None)
+
+                for d in edges:
+                    src = d["src"]
+                    w = d["w"]
+                    dest = d["dest"]
+                    self.graph.add_edge(src, dest, w)
                 return True
         except FileExistsError as err:
             print(err)
@@ -63,7 +79,7 @@ class GraphAlgo(GraphAlgoInterface):
         if visited != self.graph.v_size():
             return False
         g_copy = copy.deepcopy(self.graph)
-        reversed_g = reverse(g_copy)
+        reversed_g = self.reverse(g_copy)
         visited = reversed_g.myDFS(key)
         if visited != self.graph.v_size():
             return False
@@ -130,7 +146,6 @@ class GraphAlgo(GraphAlgoInterface):
         key = max_min[1]
         nd = self.graph.key_nodes.get(key)
         return key, max_min_dist
-
 
     def dijkstra(self, src):
         distances = dict()

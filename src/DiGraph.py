@@ -127,10 +127,11 @@ if __name__ == '__main__':
     # x = {1:"a" , 2:"b"}
     # for i in x.items():
     #     print(i[1])
-    pq = queue.PriorityQueue()
-    pq.put((2.5, 0))
-    pq.put((1.5, 1))
-    pq.put((4.5, 2))
-    pq.put((0.5, 3))
-    while(pq.not_empty):
-        print(pq.get())
+    # pq = queue.PriorityQueue()
+    # pq.put((2.5, 0))
+    # pq.put((1.5, 1))
+    # pq.put((4.5, 2))
+    # pq.put((0.5, 3))
+    # while(pq.not_empty):
+    #     print(pq.get())
+    print("as,cv,hd".split(","))
