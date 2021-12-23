@@ -59,17 +59,18 @@ class GraphAlgo(GraphAlgoInterface):
             print(err)
             return False
 
-    def reverse(graph) -> DiGraph:
+    def reverse(self, graph) -> DiGraph:
         ans = copy.deepcopy(graph)
-        keys_list = list
-        for key in ans.get_graph().key_edges.keys():
-            keys_list.append(key)
-        for i in enumerate(keys_list):
-            key = keys_list[i]
-            removed_edge = ans.remove_edge(key[0], key[1])
-        for key in graph.key_edges.keys():
-            edge = graph.key_edges.get(key[0], key[1])
-            ans.connect(key[1], key[0], edge.weight)
+        new_edges_list = list()
+        for nd in ans.key_nodes.values():
+            for edge_data in nd.child_weight.items():
+                x = (edge_data[0], nd.key, edge_data[1])
+                new_edges_list.append(x)
+            nd.child_weight.clear()
+            nd.parent_weight.clear()
+        ans.edge_counter = 0
+        for edge_data in new_edges_list:
+            ans.add_edge(edge_data[0], edge_data[1], edge_data[2])
         return ans
 
     def isConnected(self) -> bool:
@@ -80,7 +81,7 @@ class GraphAlgo(GraphAlgoInterface):
             return False
         g_copy = copy.deepcopy(self.graph)
         reversed_g = self.reverse(g_copy)
-        visited = reversed_g.myDFS(key)
+        visited = reversed_g.my_dfs(key)
         if visited != self.graph.v_size():
             return False
         return True
@@ -155,25 +156,25 @@ class GraphAlgo(GraphAlgoInterface):
         for key in keys.keys():
             distances[key] = math.inf
         distances[src] = 0
-        pq.add((0, src))
+        pq.put((0, src))
         while visited.__len__() != keys.__len__():
-            if pq.not_empty():
+            if not pq.not_empty:
                 break
-            curr_key = pq.get()
+            curr_key = pq.get()[1]
             if visited.get(curr_key) is not None:
                 continue
             visited[curr_key] = True
             curr_nd = keys.get(curr_key)
             for edge in curr_nd.child_weight.items():
-                curr_dest = edge[1]
-                weight = edge[0]
+                curr_dest = edge[0]
+                weight = edge[1]
                 if visited.get(curr_dest) is not None:
                     continue
                 curr_weight = distances.get(curr_dest)
                 new_weight = distances.get(curr_key) + weight
                 if new_weight < curr_weight:
                     distances[curr_dest] = new_weight
-                pq.add((distances.get(curr_dest), curr_dest))
+                pq.put((distances.get(curr_dest), curr_dest))
         maximum = -math.inf
         max_id = -1
         for key in keys.keys():
@@ -185,3 +186,11 @@ class GraphAlgo(GraphAlgoInterface):
 
     def plot_graph(self) -> None:
         pass
+
+
+if __name__ == '__main__':
+    g = GraphAlgo()
+    g.load_from_json("../data/A5.json")
+    print(g.graph)
+    print(g.isConnected())
+    print(g.centerPoint())

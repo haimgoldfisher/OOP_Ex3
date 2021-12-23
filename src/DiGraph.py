@@ -78,25 +78,25 @@ class DiGraph(GraphInterface):
         self.edge_counter -= 1
         return True
 
-    # def my_dfs(self, start: int) -> int:
-    #     counter = 0
-    #     key_visited = dict
-    #     keys = dict
-    #     keys.update(self.key_nodes.keys())
-    #     for key in keys:
-    #         key_visited.update(key, False)
-    #         stack = [start]
-    #         key_visited.update(start, True)
-    #         counter = counter + 1
-    #         while len(stack) is not 0:
-    #             curr_id = stack.pop()
-    #             curr_node = self.key_nodes.get(curr_id)
-    #             for child_key in curr_node.children_keys:
-    #                 if key_visited.get(child_key) is not None and key_visited.get(child_key) is False:
-    #                     stack.append(child_key)
-    #                     key_visited.update(child_key, True)
-    #                     counter = counter + 1
-    #     return counter
+    def my_dfs(self, start: int) -> int:
+        counter = 0
+        key_visited = dict()
+        # keys = dict
+        # keys.update(self.key_nodes.keys())
+        for key in self.key_nodes.keys():
+            key_visited[key] = False
+        stack = [start]
+        key_visited[start] = True
+        counter = counter + 1
+        while len(stack) != 0:
+            curr_id = stack.pop()
+            curr_node = self.key_nodes.get(curr_id)
+            for child_key in curr_node.child_weight.keys():
+                if key_visited.get(child_key) is not None and key_visited.get(child_key) is False:
+                    stack.append(child_key)
+                    key_visited[child_key] = True
+                    counter = counter + 1
+        return counter
 
     def __str__(self):
         return "Graph: |V|={} , |E|={}".format(self.key_nodes.__len__(), self.edge_counter)
@@ -124,7 +124,11 @@ if __name__ == '__main__':
     # # print(g_algo.shortest_path(0, 3))
     # # g_algo.plot_graph()
     #
-    # x = {1:"a" , 2:"b"}
+    x = {1:"a" , 2:"b"}
+    x.clear()
+    print(x)
+    # x = (1,2)
+    # print(x[0])
     # for i in x.items():
     #     print(i[1])
     # pq = queue.PriorityQueue()
