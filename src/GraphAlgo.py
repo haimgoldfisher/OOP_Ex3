@@ -220,13 +220,13 @@ class GraphAlgo(GraphAlgoInterface):
         nodes = list(self.get_graph().get_all_v().values())
         for node in nodes:
             x1, y1 = float(node.pos[0]), float(node.pos[1])
-            plt.plot(x1, y1, marker='o', markersize=15,  color='c')
-            plt.text(x1, y1, str(node.key), color='r', fontsize=17)
+            plt.plot(x1, y1, marker='o', markersize=14,  color='c')
+            plt.text(x1, y1, str(node.key), color='r', fontsize=18)
             edge_nodes = list(self.graph.all_out_edges_of_node(node.key).keys())
             for key in edge_nodes:
                 dest_node = self.graph.key_nodes.get(key)
                 x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
-                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(arrowstyle="<|-"))
+                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(facecolor='black', shrink=0.08, width=1, headwidth=8, headlength=6))
         plt.show()
 
 
