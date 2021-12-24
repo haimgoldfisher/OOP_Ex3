@@ -1,4 +1,5 @@
 import copy
+import itertools
 import math
 import queue
 from queue import PriorityQueue
@@ -13,8 +14,11 @@ from Loc_Node_Edge import Node, Location
 import matplotlib.pyplot as plt
 
 class GraphAlgo(GraphAlgoInterface):
-    def __init__(self) -> None:
-        self.graph = DiGraph()
+    def __init__(self, *args) -> None:
+        if len(args) == 1:
+            self.graph = args[0]
+        else:
+            self.graph = DiGraph()
 
     def get_graph(self) -> GraphInterface:
         return self.graph
@@ -87,78 +91,21 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        path = list
+        path = []
         if id1 == id2:
-            path.append(self.graph.key_nodes.get(id1))
+            path.append(id1)
             return 0, path
-        previous, distances, visited, keys = dict, dict, dict, dict
-        keys.update(self.graph.key_nodes.keys())
-        pq = PriorityQueue
-        for key in keys:
-            distances.update(key, float('inf'))
-        distances.update(id1, 0)
-        pq.put(id1, 0)
-        while len(visited) != len(keys):
-            if pq.empty():
-                break
-            curr_key = pq.pop.get()
-            if curr_key is id2:
-                break
-            if curr_key in visited:
-                continue
-            visited.update(curr_key)
-            curr_node = self.graph.key_nodes.get(curr_key)
-            for edge in curr_node.edges_to_children:
-                curr_edge = edge
-                curr_dest = curr_edge.dest
-                if curr_dest in visited:
-                    continue
-                curr_weight = distances.get(curr_dest)
-                new_weight = distances.get(curr_key) + curr_edge.weight
-                if new_weight < curr_weight:
-                    distances.update(curr_dest, new_weight)
-                    previous.update(curr_dest, curr_key)
-                pq.put(curr_dest, distances.get(curr_dest))
-
-        if distances.get(id2) == float('inf'):
-            return None
-        curr = id2
-        while curr != id1:
-            curr_node = self.graph.key_nodes.get(curr)
-            path.append(curr_node)
-            curr = previous.get(curr)
-        src_node = self.graph.key_nodes.get(id1)
-        path.append(src_node)
-        return path,  # distance
-
-    def TSP(self, node_lst: List[int]) -> (List[int], float):
-        pass
-
-    def centerPoint(self) -> (int, float):
-        if self.isConnected is False:
-            return None
-        e = dict()
-        lst = []
-        for src in self.graph.key_nodes.keys():
-            curr_maximum_src = self.dijkstra(src)
-            lst.append(curr_maximum_src)
-        max_min = min(lst)
-        max_min_dist = max_min[0]
-        key = max_min[1]
-        nd = self.graph.key_nodes.get(key)
-        return key, max_min_dist
-
-    def dijkstra(self, src):
+        previous = dict()
         distances = dict()
         visited = dict()
         keys = self.graph.key_nodes.copy()
         pq = queue.PriorityQueue()
         for key in keys.keys():
             distances[key] = math.inf
-        distances[src] = 0
-        pq.put((0, src))
+        distances[id1] = 0
+        pq.put((0, id1))
         while visited.__len__() != keys.__len__():
-            if not pq.not_empty:
+            if pq.qsize() == 0:
                 break
             curr_key = pq.get()[1]
             if visited.get(curr_key) is not None:
@@ -174,6 +121,91 @@ class GraphAlgo(GraphAlgoInterface):
                 new_weight = distances.get(curr_key) + weight
                 if new_weight < curr_weight:
                     distances[curr_dest] = new_weight
+                    previous[curr_dest] = curr_key
+                pq.put((distances.get(curr_dest), curr_dest))
+        if distances.get(id2) == math.inf:
+            return math.inf, []
+        curr = id2
+        while curr != id1:
+            path.insert(0, curr)
+            curr = previous.get(curr)
+        path.insert(0, id1)
+        dist = distances.get(id2)
+        return dist, path  # distance
+
+    def TSP(self, node_lst: List[int]) -> (List[int], float):
+        id_distances = {}
+        id_previous = {}
+        for node_id in node_lst:
+            ans, curr_distances, curr_previous = self.dijkstra(node_id)
+            id_distances[node_id] = curr_distances
+            id_previous[node_id] = curr_previous
+        min_path_dist = math.inf
+        min_path = []
+        all_perms = itertools.permutations(node_lst)
+        for perm in all_perms:
+            curr_path_weight = 0
+            for i in range(len(perm) - 1):
+                curr_path_weight += id_distances.get(perm[i]).get(perm[i + 1])
+            if curr_path_weight < min_path_dist:
+                min_path_dist = curr_path_weight
+                min_path = perm
+        full_min_path = []
+        for i in range(len(min_path) - 1):
+            id1 = min_path[i]
+            id2 = min_path[i + 1]
+            curr_previous = id_previous.get(id1)
+            curr = id2
+            ppath = []
+            while curr != id1:
+                ppath.insert(0, curr)
+                curr = curr_previous.get(curr)
+            full_min_path += ppath
+        full_min_path.insert(0, min_path[0])
+        return full_min_path, min_path_dist
+
+    def centerPoint(self) -> (int, float):
+        if not self.isConnected():
+            return None
+        e = dict()
+        lst = []
+        for src in self.graph.key_nodes.keys():
+            curr_maximum_src, distances, previous = self.dijkstra(src)
+            lst.append(curr_maximum_src)
+        max_min = min(lst)
+        max_min_dist = max_min[0]
+        key = max_min[1]
+        # nd = self.graph.key_nodes.get(key)
+        return key, max_min_dist
+
+    def dijkstra(self, src):
+        distances = dict()
+        visited = dict()
+        previous = dict()
+        keys = self.graph.key_nodes.copy()
+        pq = queue.PriorityQueue()
+        for key in keys.keys():
+            distances[key] = math.inf
+        distances[src] = 0
+        pq.put((0, src))
+        while visited.__len__() != keys.__len__():
+            if pq.qsize() == 0:
+                break
+            curr_key = pq.get()[1]
+            if visited.get(curr_key) is not None:
+                continue
+            visited[curr_key] = True
+            curr_nd = keys.get(curr_key)
+            for edge in curr_nd.child_weight.items():
+                curr_dest = edge[0]
+                weight = edge[1]
+                if visited.get(curr_dest) is not None:
+                    continue
+                curr_weight = distances.get(curr_dest)
+                new_weight = distances.get(curr_key) + weight
+                if new_weight < curr_weight:
+                    distances[curr_dest] = new_weight
+                    previous[curr_dest] = curr_key
                 pq.put((distances.get(curr_dest), curr_dest))
         maximum = -math.inf
         max_id = -1
@@ -182,7 +214,7 @@ class GraphAlgo(GraphAlgoInterface):
                 maximum = distances.get(key)
                 max_id = key
         ans = (maximum, src)
-        return ans
+        return ans, distances, previous
 
     def plot_graph(self) -> None:
         nodes = list(self.get_graph().get_all_v().values())
@@ -205,3 +237,6 @@ if __name__ == '__main__':
     print(g.isConnected())
     print(g.centerPoint())
     g.plot_graph()
+    print(g.shortest_path(0,42))
+    print(g.TSP([0, 5,4,9]))
+    print("H")
