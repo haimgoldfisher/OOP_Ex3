@@ -226,7 +226,7 @@ class GraphAlgo(GraphAlgoInterface):
             for key in edge_nodes:
                 dest_node = self.graph.key_nodes.get(key)
                 x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
-                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(arrowstyle="<-"))
+                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(arrowstyle="<|-"))
         plt.show()
 
 
