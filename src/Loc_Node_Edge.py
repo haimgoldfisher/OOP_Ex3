@@ -1,6 +1,4 @@
-import copy
 import math
-
 
 class Location(object):
     def __init__(self, x: int, y: int, z: int) -> None:
@@ -18,12 +16,6 @@ class Location(object):
 
 
 class Node(object):
-    # def __int__(self, key: int, pos: tuple, parents_keys: dict, children_keys: dict, edges_to_children: dict) -> None:
-    #     self.key = key
-    #     self.pos = pos
-    #     self.parents_keys = parents_keys
-    #     self.children_keys = children_keys
-    #     self.edges_to_children = edges_to_children
 
     def __init__(self, key: int, pos: tuple) -> None:
         self.key = key
@@ -37,13 +29,6 @@ class Node(object):
 
     def __repr__(self):
         return self.__str__()
-
-
-# class Edge(object):
-#     def __init__(self, src: int, dest: int, weight: float) -> None:
-#         self.src = src
-#         self.dest = dest
-#         self.weight = weight
 
 if __name__ == '__main__':
     nd = Node(0, None)

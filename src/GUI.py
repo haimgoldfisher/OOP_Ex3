@@ -5,7 +5,7 @@ import pygame
 from pygame import Color, display, gfxdraw
 from pygame.constants import RESIZABLE
 import GraphAlgo
-from Loc_Node_Edge import Location, Node, Edge
+from Loc_Node_Edge import Node
 
 
 # TOOK FROM TIRGUL - NEED TO CREATE OUR GUI

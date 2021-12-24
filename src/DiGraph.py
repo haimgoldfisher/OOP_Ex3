@@ -1,7 +1,7 @@
 import queue
 
 from GraphInterface import GraphInterface
-from Loc_Node_Edge import Location, Node
+from Loc_Node_Edge import Node
 
 
 class DiGraph(GraphInterface):
