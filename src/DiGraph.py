@@ -1,7 +1,8 @@
 import queue
+import random
 
 from GraphInterface import GraphInterface
-from Loc_Node_Edge import Node
+from Loc_Node_Edge import Node, Location
 
 
 class DiGraph(GraphInterface):
@@ -47,9 +48,16 @@ class DiGraph(GraphInterface):
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if self.key_nodes.__contains__(node_id):
             return False
-        new_nd = Node(node_id, pos)
+        if pos is None:
+            x = 35 + random.random()
+            y = 32 + random.random()
+            z = 0
+            new_pos = Location(x, y, z)
+            new_nd = Node(node_id, new_pos.pos)
+        else:
+            new_nd = Node(node_id, pos)
         self.key_nodes[node_id] = new_nd
-        return True
+        return
 
     def remove_node(self, node_id: int) -> bool:
         if self.key_nodes.get(node_id) is None:
