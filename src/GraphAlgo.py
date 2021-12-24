@@ -10,7 +10,7 @@ import GraphInterface
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
 from Loc_Node_Edge import Node, Location
-
+import matplotlib.pyplot as plt
 
 class GraphAlgo(GraphAlgoInterface):
     def __init__(self) -> None:
@@ -185,12 +185,23 @@ class GraphAlgo(GraphAlgoInterface):
         return ans
 
     def plot_graph(self) -> None:
-        pass
+        nodes = list(self.get_graph().get_all_v().values())
+        for node in nodes:
+            x1, y1 = float(node.pos[0]), float(node.pos[1])
+            plt.plot(x1, y1, marker='o', markersize=15,  color='c')
+            plt.text(x1, y1, str(node.key), color='r', fontsize=17)
+            edge_nodes = list(self.graph.all_out_edges_of_node(node.key).keys())
+            for key in edge_nodes:
+                dest_node = self.graph.key_nodes.get(key)
+                x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
+                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(arrowstyle="<-"))
+        plt.show()
 
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    g.load_from_json("../data/A5.json")
+    g.load_from_json("../data/A0.json")
     print(g.graph)
     print(g.isConnected())
     print(g.centerPoint())
+    g.plot_graph()

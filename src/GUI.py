@@ -4,6 +4,7 @@ from types import SimpleNamespace
 import pygame
 from pygame import Color, display, gfxdraw
 from pygame.constants import RESIZABLE
+import GraphAlgo
 from Loc_Node_Edge import Location, Node, Edge
 
 
@@ -28,10 +29,6 @@ def scale(data, min_screen, max_screen, min_data, max_data):
 # get the current directory path
 root_path = os.path.dirname(os.path.abspath(__file__))
 
-# load the json file into SimpleNamespace Object
-with open(root_path + '/graph_triangle.json', 'r') as file:
-    graph = json.load(
-        file, object_hook=lambda json_dict: SimpleNamespace(**json_dict))
 
 # get data proportions
 min_x = min(list(graph.nodes), key=lambda n: n.pos.x).pos.x
@@ -63,7 +60,7 @@ while(True):
     screen.fill(Color(0, 0, 0))
 
     # draw nodes
-    for n in graph.nodes:
+    for n in graph:
         x = my_scale(n.pos.x, x=True)
         y = my_scale(n.pos.y, y=True)
 
