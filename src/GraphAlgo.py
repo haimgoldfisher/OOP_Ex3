@@ -63,7 +63,7 @@ class GraphAlgo(GraphAlgoInterface):
                         edge_node_dicts["Nodes"].append({"pos": loc, "id": node.key})
                     else:
                         edge_node_dicts["Nodes"].append({"id": src})
-                    for dest, weight in self.get_graph().all_out_edges_of_node(src).items():
+                    for dest, weight in self.graph.all_out_edges_of_node(src).items():
                         edge_node_dicts["Edges"].append({"src": src, "w": weight, "dest": dest})
                 json_size = len(edge_node_dicts)
                 output = json.dumps(edge_node_dicts, indent=json_size)
