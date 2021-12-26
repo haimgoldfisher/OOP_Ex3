@@ -50,22 +50,26 @@ In this task, we would like to convert the graph implementation we did in Java t
 ---------
 ## 5. Analysis - The Performance of The Algorithms:
 
+* In every algo running, we firstly load it and then run the algo. That is, included within each algorithm is also a runtime load function. 
+* In TPS, we took 3 cities: first the first node, second is the middle node and third is the last node. In addition, the time of bulding the list of the cities is also included in the running time.
+* In Shortest Path, the source is the first node and the destination is the last node. In Java we only return the list of the path, because the distance has a whole other function and it won't be fair the use both functions (path + dist).
+
 
 | **Graph**  | **# Nodes** | **# Edges** |  **Language**  | `Load & Save`    | `Shortest Path`  | `Center Point`   | `TPS`            |
 |------------|-------------|-------------|----------------|------------------|------------------|------------------|------------------|
-| A0         | 11          | 22          | Java           |                  |                  |                  |                  |
+| A0         | 11          | 22          | Java           | 190 ms           | 154 ms (0,10)    |  192 ms          | 164 ms (0,5,10)  |
 | A0         | 11          | 22          | Python         |                  |                  |                  |                  |
-| A1         | 17          | 36          | Java           |                  |                  |                  |                  |
+| A1         | 17          | 36          | Java           | 171 ms           | 163 ms (0,16)    |  172 ms          | 186 ms (0,8,16)  |
 | A1         | 17          | 36          | Python         |                  |                  |                  |                  |
-| A2         | 31          | 80          | Java           |                  |                  |                  |                  |
+| A2         | 31          | 80          | Java           | 213 ms           | 192 ms (0,30)    |  173 ms          | 180 ms (0,15,30) |
 | A2         | 31          | 80          | Python         |                  |                  |                  |                  |
-| A3         | 49          | 136         | Java           |                  |                  |                  |                  |
+| A3         | 49          | 136         | Java           | 265 ms           | 193 ms (0,48)    |  285 ms          | 236 ms (0,24,48) |
 | A3         | 49          | 136         | Python         |                  |                  |                  |                  |
-| A4         | 40          | 102         | Java           |                  |                  |                  |                  |
+| A4         | 40          | 102         | Java           | 223 ms           | 172 ms (0,39)    |  251 ms          | 266 ms (0,20,39) |
 | A4         | 40          | 102         | Python         |                  |                  |                  |                  |
-| A5         | 48          | 166         | Java           |                  |                  |                  |                  |
+| A5         | 48          | 166         | Java           | 254 ms           | 179 ms (0,47)    |  225 ms          | 202 ms (0,24,47) |
 | A5         | 48          | 166         | Python         |                  |                  |                  |                  |
-| T0         | 4           | 5           | Java           |                  |                  |                  |                  |
+| T0         | 4           | 5           | Java           | FAILED           | FAILED           | FAILED           | FAILED           |
 | T0         | 4           | 5           | Python         |                  |                  |                  |                  |
 
 
