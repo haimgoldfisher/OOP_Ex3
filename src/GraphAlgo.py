@@ -52,18 +52,27 @@ class GraphAlgo(GraphAlgoInterface):
             print(err)
             return False
 
-    #    root_path = os.path.dirname(os.path.abspath(__file__))
-
-    #    with open(root_path + '/students.json', 'r') as file:
-    #       list_of_stud_dict = json.load(file)['students']
-    #       list_of_stud = [Student(**s) for s in list_of_stud_dict]
-
     def save_to_json(self, file_name: str) -> bool:
         try:
-            json_obj = json.dumps(self.graph)
-            return True
+            with open(file_name+".json", "w") as output_file:
+                edge_node_dicts = {"Edges": [], "Nodes": []}
+                for src in self.graph.key_nodes:
+                    node = self.graph.key_nodes.get(src)
+                    if node.pos is not None:
+                        loc = str(node.pos[0]) + "," + str(node.pos[1]) + "," + str(node.pos[2])
+                        edge_node_dicts["Nodes"].append({"pos": loc, "id": node.key})
+                    else:
+                        edge_node_dicts["Nodes"].append({"id": src})
+                    for dest, weight in self.get_graph().all_out_edges_of_node(src).items():
+                        edge_node_dicts["Edges"].append({"src": src, "w": weight, "dest": dest})
+                json_size = len(edge_node_dicts)
+                output = json.dumps(edge_node_dicts, indent=json_size)
+                output_file.write(output)
+                output_file.close()
+                return True
         except IOError as err:
             print(err)
+            output_file.close()
             return False
 
     def reverse(self, graph) -> DiGraph:
@@ -229,7 +238,7 @@ class GraphAlgo(GraphAlgoInterface):
                 dest_node = self.graph.key_nodes.get(key)
                 x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
                 plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(facecolor='black', shrink=0.04, width=0.5, headwidth=8, headlength=6))
-            plt.text(x1, y1, str(node.key), color='r', fontsize=18, path_effects=[patheffects.withStroke(linewidth=3, foreground='black')])
+            plt.text(x1, y1, str(node.key), color='r', fontsize=16, path_effects=[patheffects.withStroke(linewidth=3, foreground='black')])
         plt.show()
 
 
@@ -239,7 +248,8 @@ if __name__ == '__main__':
     print(g.graph)
     print(g.isConnected())
     print(g.centerPoint())
-    g.plot_graph()
-    print(g.shortest_path(0,42))
+    #g.plot_graph()
+    #print(g.shortest_path(0,42))
     print(g.TSP([0, 5,4,9]))
     print("H")
+    g.save_to_json("out")
