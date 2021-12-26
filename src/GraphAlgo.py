@@ -58,7 +58,7 @@ class GraphAlgo(GraphAlgoInterface):
                 edge_node_dicts = {"Edges": [], "Nodes": []}
                 for src in self.graph.key_nodes:
                     node = self.graph.key_nodes.get(src)
-                    if node.pos is not None:
+                    if node.pos is not None:  # for T0 case
                         loc = str(node.pos[0]) + "," + str(node.pos[1]) + "," + str(node.pos[2])
                         edge_node_dicts["Nodes"].append({"pos": loc, "id": node.key})
                     else:
@@ -237,7 +237,7 @@ class GraphAlgo(GraphAlgoInterface):
             for key in edge_nodes:
                 dest_node = self.graph.key_nodes.get(key)
                 x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
-                plt.annotate(None, xy=[x1, y1], xytext=[x2, y2], arrowprops=dict(facecolor='black', shrink=0.04, width=0.5, headwidth=8, headlength=6))
+                plt.annotate(None, xy=[x2, y2], xytext=[x1, y1], arrowprops=dict(facecolor='black', shrink=0.04, width=0.5, headwidth=8, headlength=6))
             plt.text(x1, y1, str(node.key), color='r', fontsize=16, path_effects=[patheffects.withStroke(linewidth=3, foreground='black')])
         plt.show()
 
@@ -248,7 +248,7 @@ if __name__ == '__main__':
     print(g.graph)
     print(g.isConnected())
     print(g.centerPoint())
-    #g.plot_graph()
+    g.plot_graph()
     #print(g.shortest_path(0,42))
     print(g.TSP([0, 5,4,9]))
     print("H")

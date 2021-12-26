@@ -8,7 +8,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_load_save(self):
         graph = GraphAlgo()
-        graph.load_from_json("data/A0.json")
+        graph.load_from_json("../data/A0.json")
         graph.save_to_json("A0_save")
 
 if __name__ == '__main__':
