@@ -28,6 +28,8 @@ class GraphAlgo(GraphAlgoInterface):
 
     def load_from_json(self, file_name: str) -> bool:
         try:
+            if not file_name.endswith('.json'):
+                file_name+=".json"
             with open(file_name, 'r') as json_file:
                 jobj = json.load(json_file)
                 edges = jobj.get("Edges")
@@ -178,7 +180,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def centerPoint(self) -> (int, float):
         if not self.isConnected():
-            return None
+            return None, float('inf')
         e = dict()
         lst = []
         for src in self.graph.key_nodes.keys():
