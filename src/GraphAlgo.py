@@ -190,7 +190,7 @@ class GraphAlgo(GraphAlgoInterface):
         # nd = self.graph.key_nodes.get(key)
         return key, max_min_dist
 
-    def dijkstra(self, src):
+    def dijkstra(self, src) -> (tuple, dict, dict):
         distances = dict()
         visited = dict()
         previous = dict()

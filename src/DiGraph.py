@@ -6,11 +6,6 @@ from Loc_Node_Edge import Node, Location
 
 
 class DiGraph(GraphInterface):
-    # def __init__(self, key_nodes: dict, key_edges: dict, mc: int) -> None:
-    #     self.key_nodes = key_nodes
-    #     self.key_edges = key_edges
-    #     self.graph = {"Nodes": self.key_nodes, "Edges": key_edges}
-    #     self.mc = mc
 
     def __init__(self) -> None:
         self.key_nodes = dict()
