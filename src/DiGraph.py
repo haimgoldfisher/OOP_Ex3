@@ -6,6 +6,13 @@ from Loc_Node_Edge import Node, Location
 
 
 class DiGraph(GraphInterface):
+    """
+    this class represent directed weighted graph. each graph contains the following information:
+    key_nodes - a dictionary that contains all the nodes in this graph such that the key is the id of this node
+                and the value is the node object itself.
+    edge_counter - a counter that count the number of edges in this graph.
+    mc - a varible that increased by 1 each time node or edge being removed or added.
+    """
 
     def __init__(self) -> None:
         self.key_nodes = dict()
@@ -31,16 +38,34 @@ class DiGraph(GraphInterface):
         return self.mc
 
     def add_edge(self, id1: int, id2: int, weight: float) -> bool:
+        """
+        Adds an edge to the graph.
+        @param id1: The start node of the edge
+        @param id2: The end node of the edge
+        @param weight: The weight of the edge
+        @return: True if the edge was added successfully, False o.w.
+        Note: If the edge already exists or one of the nodes dose not exists the functions will do nothing
+        """
         if self.key_nodes.get(id1) is None or self.key_nodes.get(id2) is None:
+            return False
+        if self.key_nodes.get(id1).child_weight.get(id2) is not None:
             return False
         nd1 = self.key_nodes.get(id1)
         nd2 = self.key_nodes.get(id2)
         nd1.child_weight[id2] = weight
         nd2.parent_weight[id1] = weight
         self.edge_counter += 1
+        self.mc += 1
         return True
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
+        """
+        Adds a node to the graph. if the pos is none than it will create a random location fo this node.
+        @param node_id: The node ID
+        @param pos: The position of the node
+        @return: True if the node was added successfully, False o.w.
+        Note: if the node id already exists the node will not be added
+        """
         if self.key_nodes.__contains__(node_id):
             return False
         if pos is None:
@@ -52,9 +77,16 @@ class DiGraph(GraphInterface):
         else:
             new_nd = Node(node_id, pos)
         self.key_nodes[node_id] = new_nd
+        self.mc += 1
         return
 
     def remove_node(self, node_id: int) -> bool:
+        """
+        Removes a node from the graph.
+        @param node_id: The node ID
+        @return: True if the node was removed successfully, False o.w.
+        Note: if the node id does not exists the function will do nothing
+        """
         if self.key_nodes.get(node_id) is None:
             return False
         nd = self.key_nodes.get(node_id)
@@ -67,9 +99,17 @@ class DiGraph(GraphInterface):
             curr_nd.parent_weight.__delitem__(node_id)
             self.edge_counter -= 1
         self.key_nodes.__delitem__(node_id)
+        self.mc += 1
         return True
 
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
+        """
+       Removes an edge from the graph.
+       @param node_id1: The start node of the edge
+       @param node_id2: The end node of the edge
+       @return: True if the edge was removed successfully, False o.w.
+       Note: If such an edge does not exists the function will do nothing
+       """
         if self.key_nodes.get(node_id1) is None or self.key_nodes.get(node_id2) is None:
             return False
         nd1 = self.key_nodes.get(node_id1)
@@ -79,13 +119,16 @@ class DiGraph(GraphInterface):
         nd1.child_weight.__delitem__(node_id2)
         nd2.parent_weight.__delitem__(node_id1)
         self.edge_counter -= 1
+        self.mc += 1
         return True
 
     def my_dfs(self, start: int) -> int:
+        """
+        this function is an implementation of dfs using a stack.
+        its used as a helper for the "isConnected" algorithm.
+        """
         counter = 0
         key_visited = dict()
-        # keys = dict
-        # keys.update(self.key_nodes.keys())
         for key in self.key_nodes.keys():
             key_visited[key] = False
         stack = [start]
@@ -109,10 +152,12 @@ class DiGraph(GraphInterface):
 
 
 if __name__ == '__main__':
-    # g = DiGraph()  # creates an empty directed graph
-    # for n in range(4):
-    #     g.add_node(n)
-    # g.add_edge(0, 1, 1)
+    g = DiGraph()  # creates an empty directed graph
+    for n in range(4):
+        g.add_node(n)
+    print(g.add_edge(0, 1, 1))
+    print(g.add_edge(0, 1, 1))
+
     # g.add_edge(1, 0, 1.1)
     # g.add_edge(1, 2, 1.3)
     # g.add_edge(2, 3, 1.1)

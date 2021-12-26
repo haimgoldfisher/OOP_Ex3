@@ -17,6 +17,10 @@ from Loc_Node_Edge import Node, Location
 import matplotlib.pyplot as plt
 
 class GraphAlgo(GraphAlgoInterface):
+    """
+    this class represent a set of algorithms of graphs. it contains only 1 thing:
+    graph - the graph the algorithms will be used on.
+    """
     def __init__(self, *args) -> None:
         if len(args) == 1:
             self.graph = args[0]
@@ -27,6 +31,11 @@ class GraphAlgo(GraphAlgoInterface):
         return self.graph
 
     def load_from_json(self, file_name: str) -> bool:
+        """
+        Loads a graph from a json file.
+        @param file_name: The path to the json file
+        @returns True if the loading was successful, False o.w.
+        """
         try:
             if not file_name.endswith('.json'):
                 file_name+=".json"
@@ -55,6 +64,11 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def save_to_json(self, file_name: str) -> bool:
+        """
+        Saves the graph in JSON format to a file
+        @param file_name: The path to the out file
+        @return: True if the save was successful, False o.w.
+        """
         try:
             with open(file_name+".json", "w") as output_file:
                 edge_node_dicts = {"Edges": [], "Nodes": []}
@@ -78,6 +92,11 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def reverse(self, graph) -> DiGraph:
+        """
+        this function create a new graph which is the reverse the given graph.
+        its used as helper function for isConnected function.
+        @return - new reversed graph
+        """
         ans = copy.deepcopy(graph)
         new_edges_list = list()
         for nd in ans.key_nodes.values():
@@ -92,6 +111,12 @@ class GraphAlgo(GraphAlgoInterface):
         return ans
 
     def isConnected(self) -> bool:
+        """
+        this function checks if the graph is strongly connected by running dfs on the graph
+        and on its reversed graph if in each dfs the amount of nodes visited equals to the
+        amount of node in this graph then the graph is connected.
+        @return - True if it is and False otherwise.
+        """
         keys = list(self.graph.key_nodes.keys())
         key = keys[0]
         visited = self.graph.my_dfs(key)
@@ -105,6 +130,13 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
+        """
+        Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm.
+        this function use Dijkstra's Algorithm with PriorityQueue.
+        @param id1: The start node id
+        @param id2: The end node id
+        @return: The distance of the path, a list of the nodes ids that the path goes through
+        """
         path = []
         if id1 == id2:
             path.append(id1)
@@ -148,6 +180,14 @@ class GraphAlgo(GraphAlgoInterface):
         return dist, path  # distance
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
+        """
+       Finds the shortest path that visits all the nodes in the list.
+       this function runs Dijkstra's Algorithm for each node in the list and saves its results.
+       then it creates all the permutations of the given list and checks which permutation
+       gives the minimum weight.
+       :param node_lst: A list of nodes id's
+       :return: A list of the nodes id's in the path, and the overall distance
+       """
         id_distances = {}
         id_previous = {}
         for node_id in node_lst:
@@ -179,6 +219,10 @@ class GraphAlgo(GraphAlgoInterface):
         return full_min_path, min_path_dist
 
     def centerPoint(self) -> (int, float):
+        """
+       Finds the node that has the shortest distance to it's farthest node.
+       :return: The nodes id, min-maximum distance
+       """
         if not self.isConnected():
             return None, float('inf')
         e = dict()
@@ -193,6 +237,13 @@ class GraphAlgo(GraphAlgoInterface):
         return key, max_min_dist
 
     def dijkstra(self, src) -> (tuple, dict, dict):
+        """
+        this function is an implementation of Dijkstra's Algorithm using PriorityQueue.
+        it returns 3 things:
+        distances - dictionary that contains the distance of each node in the graph from the source node.
+        previous - dictionary that contains the previous node of each node in the graph in the path from the source node.
+        ans - tuple that contains the maximum distance from a node and the src id.
+        """
         distances = dict()
         visited = dict()
         previous = dict()
@@ -231,6 +282,12 @@ class GraphAlgo(GraphAlgoInterface):
         return ans, distances, previous
 
     def plot_graph(self) -> None:
+        """
+        Plots the graph.
+        If the nodes have a position, the nodes will be placed there.
+        Otherwise, they will be placed in a random but elegant manner.
+        @return: None
+        """
         nodes = list(self.get_graph().get_all_v().values())
         for node in nodes:
             x1, y1 = float(node.pos[0]), float(node.pos[1])
