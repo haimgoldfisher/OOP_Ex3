@@ -34,6 +34,8 @@ In this task, we would like to convert the graph implementation we did in Java t
 ---------
 ## 2. The Thoughts Behind The Classes:
 
+It is important to remember that we have already done most of the planning and implementation in the previous project. Therefore, most of the work will be to intelligently convert the project to Python language. Note that Python has data structures that are similar to the data structures in Java. For example: dictionary instead of hashmap.
+A class will be built to represent for us the location(tuple of X,Y,Z) node and edge. Since this task does not require the construction of an Edge class, we can give it up. That is, using a dictionary variable that will hold for each node the dest node to which its edge reaches, as well as the weight of the side, we can represent all the edges in the graph. Because these two classes (location, node + edge) are quite small, we will keep them in the same file that will contain two classes. From there it remains to exercise both the DiGraph and GraphAlgo classes. We will do this by realizing the interfaces GraphInterface, GraphAlgoInterface respectively. Alongside building the classes, we would like to implement two testing classes, one for each class. For the purpose of constructing the comparison document for the previous assignment, an additional class will be constructed. It will produce for us graphs to show the differences between the Java project we did and this Python project.
 
 ---------
 ## 3. UML Diagram:
@@ -46,6 +48,7 @@ In this task, we would like to convert the graph implementation we did in Java t
 ---------
 ## 4. Testing Class:
 
+As required, we will write two test units. The TestDiGraph unit will test the graph methods including location, nodes, edges and MC. Graphs will be built, we will add and remove edges and vertices and then we will ensure that the class works properly. Of course we would like to see that after each operation, the MC value increases as expected. The TestGraphAlgo unit will be performed, but most of the work in it is outside the computer. That is, since we want to verify that the output is correct, we will need to verify this using the algorithmic tools at our disposal. We will check that the desired output is obtained for each of the algorithms. In addition, we would like to see that the auxiliary functions (reverse, isConnected...) are correct as required.
 
 ---------
 ## 5. Analysis - The Performance of The Algorithms:
@@ -88,18 +91,26 @@ In this task, we would like to convert the graph implementation we did in Java t
 | 1,000,000  | 1,000,000   | 10,000,000   | Java           | OutOfMemoryError | 22.542s (0,999999)| TimeoutException | OutOfMemoryError          |
 | 1,000,000  | 1,000,000   | 10,000,000   | Python         | 3 m 3.487 s      | 3m 4.5s (0,999999)| TimeoutException | 6m 37s  (0,500000,999999) |
 
+## A very detailed comparative report, including graphs between the two projects can be found on the project's wiki page.
 
 ---------
 ## 6. How to Download, Run and Use The Graphical Interface:
 
+Before Running this project, install the above packages:
+```
+matplotlib Version 3.4.3 (or higher), pandas Version 1.3.4 (or higher).
+```
+
 Download the whole project and export it by the above actions:
 ```
-Click Code (Green Button) -> Click Download ZIP -> Choose Extract to Folder in Zip -> 
+Click Code (Green Button) -> Click Download ZIP -> Choose Extract to Folder in Zip -> Run: Main.py
 ```
+
+You can add as many nodes and edges as you like and run the algorithms on them.
 
 ---------
 
-This project was done by using ...
+This project was done by using Python Interpreter: Python 3.8
 
 ---------
 ## 7. Info & Resources:
@@ -110,8 +121,8 @@ This project was done by using ...
 - Priority Queue : https://en.wikipedia.org/wiki/Priority_queue
 - Dijkstra's Algorithm : https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 - TSP : https://en.wikipedia.org/wiki/Travelling_salesman_problem
-- Pygame : https://www.pygame.org/wiki/tutorials
 - Matplotlib : https://matplotlib.org/
+- Pandas: https://pandas.pydata.org/
 
 ---------
 ## 8. Languages & Tools: 
@@ -120,7 +131,6 @@ This project was done by using ...
 <a href="https://www.python.org/" title="Python"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/2048px-Python.svg.png" alt="Python" width="40" height="40"/></a>
 <a href="https://www.jetbrains.com/pycharm/" title="Pycharm"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/PyCharm_Icon.svg/1024px-PyCharm_Icon.svg.png" alt="Pycharm" width="40" height="40"/></a>  
 <a href="https://www.json.org/json-en.html" title="JSON"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JSON_vector_logo.svg/2048px-JSON_vector_logo.svg.png" alt="JSON" width="40" height="40"/></a>
-<a href="https://www.pygame.org/news" title="PyGame"> <img src="https://www.pygame.org/ftp/pygame-head-party.png" alt="PyGame" width="40" height="40"/></a>  
   <a href="https://matplotlib.org/" title="Matplotlib"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Created_with_Matplotlib-logo.svg/2048px-Created_with_Matplotlib-logo.svg.png" alt="Matplotlib" width="40" height="40"/></a>  
 <a href="https://pandas.pydata.org/" title="Pandas"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pandas_mark.svg/1200px-Pandas_mark.svg.png" alt="Pandas" width="40" height="40"/></a>   
 
