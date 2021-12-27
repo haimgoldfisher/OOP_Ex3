@@ -54,6 +54,19 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g.my_dfs(1), 3)
         self.assertEqual(g.my_dfs(0), 1)
 
+    def test_mc(self):
+        g = DiGraph()
+        g.add_node(0, (1, 2, 3))
+        g.add_node(1, (2, 3, 4))
+        g.add_node(2, (3, 4, 0))
+        g.add_edge(0, 1, 23.11)
+        g.add_edge(1, 2, 0.9807)
+        g.add_edge(2, 0, 14.0054)
+        self.assertEqual(6, g.get_mc())
+        g.remove_edge(0, 1)
+        g.remove_node(2)
+        self.assertEqual(8, g.get_mc())
+
 
 if __name__ == '__main__':
     unittest.main()

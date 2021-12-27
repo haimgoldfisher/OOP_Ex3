@@ -2,6 +2,7 @@ import math
 import unittest
 from GraphAlgo import GraphAlgo
 
+
 class MyTestCase(unittest.TestCase):
 
     def test_load_save(self):
@@ -87,6 +88,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g.graph.get_all_v().keys().__len__(), 1000)
         self.assertEqual(g.graph.edge_counter, 10000) # deg 20 - 10 in 10 out
         self.assertTrue(g.isConnected())
+
 
 if __name__ == '__main__':
     unittest.main()

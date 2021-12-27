@@ -297,6 +297,7 @@ class GraphAlgo(GraphAlgoInterface):
                 x2, y2 = float(dest_node.pos[0]), float(dest_node.pos[1])
                 plt.annotate(None, xy=[x2, y2], xytext=[x1, y1], arrowprops=dict(facecolor='black', shrink=0.04, width=0.5, headwidth=8, headlength=6))
             plt.text(x1, y1, str(node.key), color='r', fontsize=16, path_effects=[patheffects.withStroke(linewidth=3, foreground='black')])
+        #plt.savefig("a")
         plt.show()
 
     def init_random(self, zeroes: int) -> None:
