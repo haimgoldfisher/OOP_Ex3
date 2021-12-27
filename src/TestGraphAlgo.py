@@ -1,5 +1,7 @@
 import math
 import unittest
+
+from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
 
 
@@ -14,6 +16,30 @@ class MyTestCase(unittest.TestCase):
         graph2.load_from_json("A0_save.json")
         self.assertEqual(graph1.get_graph().get_all_v().keys(), graph2.get_graph().get_all_v().keys()) # nodes
         self.assertEqual(graph1.get_graph().edge_counter, graph2.get_graph().edge_counter) # edges
+
+    def test_reverse(self):
+        g = DiGraph()
+        g.add_node(1, (0, 0, 0))
+        g.add_node(2, (1, 0, 0))
+        g.add_node(3, (1, 1, 0))
+        g.add_node(4, (0, 1, 0))
+        g.add_edge(1, 2, 1)
+        g.add_edge(2, 3, 2)
+        g.add_edge(3, 4, 3)
+        g.add_edge(4, 1, 4)
+        algo = GraphAlgo()
+        algo.graph = g
+        # algo.plot_graph()
+        self.assertEqual(1, algo.graph.all_out_edges_of_node(1).get(2)) # 1 -> 2
+        self.assertEqual(2, algo.graph.all_out_edges_of_node(2).get(3)) # 2 -> 3
+        self.assertEqual(3, algo.graph.all_out_edges_of_node(3).get(4)) # 3 -> 4
+        self.assertEqual(4, algo.graph.all_out_edges_of_node(4).get(1)) # 4 -> 1
+        algo.graph = algo.reverse(g)
+        # algo.plot_graph()
+        self.assertEqual(4, algo.graph.all_out_edges_of_node(1).get(4)) # 1 -> 4
+        self.assertEqual(3, algo.graph.all_out_edges_of_node(4).get(3)) # 4 -> 3
+        self.assertEqual(2, algo.graph.all_out_edges_of_node(3).get(2)) # 3 -> 2
+        self.assertEqual(1, algo.graph.all_out_edges_of_node(2).get(1)) # 2 -> 1
 
     def test_isConnected(self):
         g_A0, g_A1, g_A2, g_A3, g_A4, g_A5, g_T0 = GraphAlgo(), GraphAlgo(), GraphAlgo(), GraphAlgo(), GraphAlgo(), GraphAlgo(), GraphAlgo()
