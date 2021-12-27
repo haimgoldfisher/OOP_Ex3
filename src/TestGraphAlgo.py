@@ -73,6 +73,26 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g_A3.TSP([21, 44, 2, 11]), ([11, 10, 9, 23, 22, 21, 0, 1, 2, 6, 7, 44], 13.73082980361677))
         self.assertEqual(g_A4.TSP([0, 1, 2, 3, 4, 5, 6, 10]), ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 15.062841839696361))
 
+    def test_init_random(self):
+        g = GraphAlgo()
+        g.init_random(1)
+        self.assertEqual(g.graph.get_all_v().keys().__len__(), 10)
+        self.assertEqual(g.graph.edge_counter, 20) # cant be at deg 20, no enough nodes
+        self.assertTrue(g.isConnected())
+        g.init_random(2)
+        self.assertEqual(g.graph.get_all_v().keys().__len__(), 100)
+        self.assertEqual(g.graph.edge_counter, 1000) # deg 20 - 10 in 10 out
+        self.assertTrue(g.isConnected())
+        g.init_random(3)
+        self.assertEqual(g.graph.get_all_v().keys().__len__(), 1000)
+        self.assertEqual(g.graph.edge_counter, 10000) # deg 20 - 10 in 10 out
+        self.assertTrue(g.isConnected())
+
+    def test_mine(self):
+        graph = GraphAlgo()
+        graph.load_from_json("1000000_nodes.json")
+        graph.save_to_json("A0_save")
+
 
 if __name__ == '__main__':
     unittest.main()

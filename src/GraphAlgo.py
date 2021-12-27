@@ -2,6 +2,7 @@ import copy
 import itertools
 import math
 import queue
+from random import random, randint, randrange
 from queue import PriorityQueue
 from types import SimpleNamespace
 from typing import List
@@ -299,6 +300,26 @@ class GraphAlgo(GraphAlgoInterface):
                 plt.annotate(None, xy=[x2, y2], xytext=[x1, y1], arrowprops=dict(facecolor='black', shrink=0.04, width=0.5, headwidth=8, headlength=6))
             plt.text(x1, y1, str(node.key), color='r', fontsize=16, path_effects=[patheffects.withStroke(linewidth=3, foreground='black')])
         plt.show()
+
+    def init_random(self, zeroes: int) -> None:
+        num_of_nodes = int(math.pow(10, zeroes))
+        rand_g = DiGraph()
+        for i in range(num_of_nodes):
+            x, y = 35+random(), 32 + random()
+            loc = (x, y, 0)
+            rand_g.add_node(i, loc)
+        for n in range(num_of_nodes):
+            scale = 2
+            if zeroes > 1:
+                scale = 10
+            rand_g.add_edge(n, (n+1) % num_of_nodes, 1 + random()) # for connected graph
+            for e in range(1, scale):
+                dest = randrange(0, num_of_nodes)
+                w = 1 + random()
+                while n == dest or rand_g.all_out_edges_of_node(n).get(dest) is not None:
+                    dest = randrange(0, num_of_nodes) # so n is not e
+                rand_g.add_edge(n, dest, w)
+        self.graph = rand_g
 
 
 if __name__ == '__main__':
