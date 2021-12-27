@@ -61,7 +61,7 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 * Computer Info: Processor - Intel(R) Core(TM) i5 -1035G1 CPU @ 1.00GHz 1.19 GHz, RAM - 20.0 GB (19.8 GB usable) 
 
 
-| **Graph**  | **# Nodes** | **# Edges** |  **Language**  | `Load & Save`    | `Shortest Path`  | `Center Point`   | `TPS`            |
+| **Graph**  | **# Nodes** | **# Edges** |  **Language**  | `Load & Save`    | `Shortest Path`  | `Center Point`   | `TSP`            |
 |------------|-------------|-------------|----------------|------------------|------------------|------------------|------------------|
 | A0         | 11          | 22          | Java           | 190 ms           | 154 ms (0,10)    |  192 ms          | 164 ms  (0,5,10) |
 | A0         | 11          | 22          | Python         | 5 ms             | 10 ms  (0,10)    |  6 ms            | 3 ms    (0,5,10) |
@@ -80,7 +80,7 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 
 ## Random Graphs
 
-| **Graph**  | **# Nodes** | **# Edges**  |  **Language**  | `Load & Save`    | `Shortest Path`   | `Center Point`   | `TPS`                     |
+| **Graph**  | **# Nodes** | **# Edges**  |  **Language**  | `Load & Save`    | `Shortest Path`   | `Center Point`   | `TSP`                     |
 |------------|-------------|--------------|----------------|------------------|-------------------|------------------|---------------------------|
 | 100        | 100         | 1,000        | Java           | 253 ms           | 233 ms (0,99)     | 395 ms           | 396 ms  (0,50,99)         |
 | 100        | 100         | 1,000        | Python         | 19 ms            | 10 ms (0,99)      | 244 ms           | 30  ms  (0,50,99)         |
