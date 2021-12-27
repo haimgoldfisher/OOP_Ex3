@@ -78,7 +78,7 @@ class DiGraph(GraphInterface):
             new_nd = Node(node_id, pos)
         self.key_nodes[node_id] = new_nd
         self.mc += 1
-        return
+        return True
 
     def remove_node(self, node_id: int) -> bool:
         """

@@ -3,7 +3,8 @@
 
 class Loc_Node_Edge
 {
-
+    * Location (Class)
+    * Node (Class)
 }
 
 interface GraphInterface
@@ -13,7 +14,17 @@ interface GraphInterface
 
 class DiGraph
 {
-
+    + v_size(self) -> int:
+    + e_size(self) -> int:
+    + get_mc(self) -> int:
+    + get_all_v(self) -> dict:
+    + all_in_edges_of_node(self, id1: int) -> dict:
+    + all_out_edges_of_node(self, id1: int) -> dict:
+    + add_node(self, node_id: int, pos: tuple = None) -> bool:
+    + remove_node(self, node_id: int) -> bool:
+    + add_edge(self, id1: int, id2: int, weight: float) -> bool
+    + remove_edge(self, node_id1: int, node_id2: int) -> bool
+    + my_dfs(self, start: int) -> int
 }
 
 class TestDiGraph
@@ -28,7 +39,17 @@ interface GraphAlgoInterface
 
 class GraphAlgo
 {
-
+    + get_graph(self) -> GraphInterface
+    + load_from_json(self, file_name: str) -> bool
+    + save_to_json(self, file_name: str) -> bool
+    + reverse(self, graph) -> DiGraph
+    + isConnected(self) -> bool
+    + shortest_path(self, id1: int, id2: int) -> (float, list)
+    + TSP(self, node_lst: List[int]) -> (List[int], float)
+    + centerPoint(self) -> (int, float)
+    + dijkstra(self, src) -> (tuple, dict, dict)
+    + plot_graph(self) -> None
+    + init_random(self, zeroes: int) -> None
 }
 
 class TestGraphAlgo
@@ -36,12 +57,12 @@ class TestGraphAlgo
 
 }
 
-class GUI
+class main
 {
 
 }
 
-class main
+class graph_comp_maker
 {
 
 }
@@ -53,9 +74,7 @@ TestDiGraph ..> DiGraph
 DiGraph --|> GraphAlgo
 TestGraphAlgo ..> GraphAlgo
 GraphAlgo --|> main
-DiGraph --|> GUI
-GraphAlgo --|> GUI
-GUI --|> main
+GraphAlgo --|> graph_comp_maker
 
 @enduml
 @enduml

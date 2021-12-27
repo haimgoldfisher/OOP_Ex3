@@ -2,20 +2,16 @@ import copy
 import itertools
 import math
 import queue
-from random import random, randint, randrange
-from queue import PriorityQueue
-from types import SimpleNamespace
+from random import random, randrange
 from typing import List
 import json
-import os
-
 from matplotlib import patheffects
-
 import GraphInterface
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
 from Loc_Node_Edge import Node, Location
 import matplotlib.pyplot as plt
+
 
 class GraphAlgo(GraphAlgoInterface):
     """
@@ -39,7 +35,7 @@ class GraphAlgo(GraphAlgoInterface):
         """
         try:
             if not file_name.endswith('.json'):
-                file_name+=".json"
+                file_name += ".json"
             with open(file_name, 'r') as json_file:
                 jobj = json.load(json_file)
                 edges = jobj.get("Edges")
@@ -71,7 +67,9 @@ class GraphAlgo(GraphAlgoInterface):
         @return: True if the save was successful, False o.w.
         """
         try:
-            with open(file_name+".json", "w") as output_file:
+            if not file_name.endswith('.json'):
+                file_name += ".json"
+            with open(file_name, "w") as output_file:
                 edge_node_dicts = {"Edges": [], "Nodes": []}
                 for src in self.graph.key_nodes:
                     node = self.graph.key_nodes.get(src)
@@ -302,6 +300,12 @@ class GraphAlgo(GraphAlgoInterface):
         plt.show()
 
     def init_random(self, zeroes: int) -> None:
+        """
+        Init a random graph with 10^n nodes
+        each node has 10 edges which go from it, so we
+        can say that the average degree of the nodes is 20 (in+out)
+        @return: None
+        """
         num_of_nodes = int(math.pow(10, zeroes))
         rand_g = DiGraph()
         for i in range(num_of_nodes):
