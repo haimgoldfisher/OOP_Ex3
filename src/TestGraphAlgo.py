@@ -88,11 +88,5 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g.graph.edge_counter, 10000) # deg 20 - 10 in 10 out
         self.assertTrue(g.isConnected())
 
-    def test_mine(self):
-        graph = GraphAlgo()
-        graph.load_from_json("1000000_nodes.json")
-        graph.save_to_json("A0_save")
-
-
 if __name__ == '__main__':
     unittest.main()
