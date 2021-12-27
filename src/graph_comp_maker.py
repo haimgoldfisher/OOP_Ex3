@@ -66,7 +66,22 @@ def tps():
     plt.show()
 
 
+def finished():
+    data = {'Java': 39, 'Python': 45}
+    colors = ['orange', 'blue']
+    courses = list(data.keys())
+    values = list(data.values())
+    fig = plt.figure(figsize=(6, 5))
+    plt.bar(courses, values, color=colors,width=0.3)
+    plt.xlabel("Languages")
+    plt.ylabel("# of finished algos")
+    plt.title("Number of Functions / Algorithms completed")
+    # plt.savefig("comp")
+    plt.show()
+
+
 if __name__ == '__main__':
+
     load_save_A()
     shortest_path_A()
     center_A()
@@ -76,3 +91,4 @@ if __name__ == '__main__':
     shortest_path()
     center()
     tps()
+    finished()
