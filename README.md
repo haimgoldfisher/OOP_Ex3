@@ -40,8 +40,10 @@ A class will be built to represent for us the location(tuple of X,Y,Z) node and 
 ---------
 ## 3. UML Diagram:
 
+* We chose to present only the significant functions and methods in the main classes in the project:
+
  <p align="center">
-<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/diagram.png?raw=true" height=400 weight=800/>
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/diagram.png?raw=true" height=500 weight=1000/>
 </p>
   
   
@@ -59,7 +61,7 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 * Computer Info: Processor - Intel(R) Core(TM) i5 -1035G1 CPU @ 1.00GHz 1.19 GHz, RAM - 20.0 GB (19.8 GB usable) 
 
 
-| **Graph**  | **# Nodes** | **# Edges** |  **Language**  | `Load & Save`    | `Shortest Path`  | `Center Point`   | `TPS`            |
+| **Graph**  | **# Nodes** | **# Edges** |  **Language**  | `Load & Save`    | `Shortest Path`  | `Center Point`   | `TSP`            |
 |------------|-------------|-------------|----------------|------------------|------------------|------------------|------------------|
 | A0         | 11          | 22          | Java           | 190 ms           | 154 ms (0,10)    |  192 ms          | 164 ms  (0,5,10) |
 | A0         | 11          | 22          | Python         | 5 ms             | 10 ms  (0,10)    |  6 ms            | 3 ms    (0,5,10) |
@@ -78,7 +80,7 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 
 ## Random Graphs
 
-| **Graph**  | **# Nodes** | **# Edges**  |  **Language**  | `Load & Save`    | `Shortest Path`   | `Center Point`   | `TPS`                     |
+| **Graph**  | **# Nodes** | **# Edges**  |  **Language**  | `Load & Save`    | `Shortest Path`   | `Center Point`   | `TSP`                     |
 |------------|-------------|--------------|----------------|------------------|-------------------|------------------|---------------------------|
 | 100        | 100         | 1,000        | Java           | 253 ms           | 233 ms (0,99)     | 395 ms           | 396 ms  (0,50,99)         |
 | 100        | 100         | 1,000        | Python         | 19 ms            | 10 ms (0,99)      | 244 ms           | 30  ms  (0,50,99)         |
@@ -91,10 +93,10 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 | 1,000,000  | 1,000,000   | 10,000,000   | Java           | OutOfMemoryError | 22.542s (0,999999)| TimeoutException | OutOfMemoryError          |
 | 1,000,000  | 1,000,000   | 10,000,000   | Python         | 3 m 3.487 s      | 3m 4.5s (0,999999)| TimeoutException | 6m 37s  (0,500000,999999) |
 
-## A very detailed comparative report, including graphs between the two projects can be found on the project's wiki page.
+## A very detailed comparative report, including graphs between the two projects can be found on the project's wiki page: https://github.com/haimgoldfisher/OOP_Ex3/wiki/Comparison-report
 
 ---------
-## 6. How to Download, Run and Use The Graphical Interface:
+## 6. How to Download, Run and Use The Project:
 
 Before Running this project, install the above packages:
 ```
@@ -110,10 +112,56 @@ You can add as many nodes and edges as you like and run the algorithms on them.
 
 ---------
 
+## 7. Graph Presentations:
+
+## A) A0:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A0.png?raw=true" height=300 weight=600/>
+</p>
+
+## B) A1:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A1.png?raw=true" height=300 weight=600/>
+</p>
+
+## C) A2:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A2.png?raw=true" height=300 weight=600/>
+</p>
+
+## D) A3:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A3.png?raw=true" height=300 weight=600/>
+</p>
+
+## E) A4:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A4.png?raw=true" height=300 weight=600/>
+</p>
+
+## F) A5:
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/A5.png?raw=true" height=300 weight=600/>
+</p>
+
+## G) T0 (random):
+
+ <p align="center">
+<img align="center" src="https://github.com/haimgoldfisher/OOP_Ex3/blob/master/pics/T0.png?raw=true" height=300 weight=600/>
+</p>
+
+---------
+
 This project was done by using Python Interpreter: Python 3.8
 
 ---------
-## 7. Info & Resources:
+## 8. Info & Resources:
 
 - Directed Graphs : https://en.wikipedia.org/wiki/Directed_graph
 - Connectivity : https://en.wikipedia.org/wiki/Connectivity_(graph_theory)
@@ -125,7 +173,7 @@ This project was done by using Python Interpreter: Python 3.8
 - Pandas: https://pandas.pydata.org/
 
 ---------
-## 8. Languages & Tools: 
+## 9. Languages & Tools: 
 
 <p align="left">
 <a href="https://www.python.org/" title="Python"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/2048px-Python.svg.png" alt="Python" width="40" height="40"/></a>
