@@ -93,7 +93,7 @@ As required, we will write two test units. The TestDiGraph unit will test the gr
 | 1,000,000  | 1,000,000   | 10,000,000   | Java           | OutOfMemoryError | 22.542s (0,999999)| TimeoutException | OutOfMemoryError          |
 | 1,000,000  | 1,000,000   | 10,000,000   | Python         | 3 m 3.487 s      | 3m 4.5s (0,999999)| TimeoutException | 6m 37s  (0,500000,999999) |
 
-## A very detailed comparative report, including graphs between the two projects can be found on the project's wiki page.
+## A very detailed comparative report, including graphs between the two projects can be found on the project's wiki page: https://github.com/haimgoldfisher/OOP_Ex3/wiki/Comparison-report
 
 ---------
 ## 6. How to Download, Run and Use The Project:
